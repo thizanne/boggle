@@ -1,0 +1,4 @@
+* Ruzzle solver
+
+Usage : =./ruzzle.native dico_fr.txt=. Then type the grid in the usual
+reading order and enjoy. Words are currently sorted by size.
