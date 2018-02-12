@@ -1,6 +1,7 @@
 (jbuild_version 1)
 
 (executable
- ((name boggle)
+ ((name main)
   (public_name boggle)
+  (libraries (boggle))
   ))

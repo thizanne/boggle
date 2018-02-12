@@ -1,3 +1,5 @@
+open Boggle
+
 let compare w1 w2 =
   if String.length w1 = String.length w2
   then Pervasives.compare w1 w2
@@ -39,7 +41,7 @@ let print_board_then_solution lexicon board =
   print_solution lexicon board
 
 let make_random_board () =
-  Board.make 4 @@ RandomLetter.(picker occurrences_fr)
+  Board.make 4 @@ RandomLetter.(picker Distribution.fr)
 
 let main () =
   let lexicon_filename = get_lexicon_filename () in

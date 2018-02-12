@@ -1,0 +1,3 @@
+B ../_build/default/lib
+FLG -open Boggle -w -40
+S .

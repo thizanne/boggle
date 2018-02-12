@@ -1,36 +1,42 @@
-type occurrences = int array
+module Distribution = struct
+  type t = int array
+  (** Distributions are represented as an array of (relative)
+      occurrences of each letter (diacritic removed), given in
+      alphabetic order.
+  *)
 
-let occurrences_uniform =
-  Array.make 26 1
+  let uniform =
+    Array.make 26 1
 
-let occurrences_fr = [|
-  70924245; (* a *)
-  10817171; (* b *)
-  30764083; (* c *)
-  34914685; (* d *)
-  137301681; (* e *)
-  10579192; (* f *)
-  11684140; (* g *)
-  10583562; (* h *)
-  63139805; (* i *)
-  3276064; (* j *)
-  2747547; (* k *)
-  47171247; (* l *)
-  24894034; (* m *)
-  60728196; (* n *)
-  48132617; (* o *)
-  23647179; (* p *)
-  6140307; (* q *)
-  57656209; (* r *)
-  61882785; (* s *)
-  56267109; (* t *)
-  43069799; (* u *)
-  10590858; (* v *)
-  1653435; (* w *)
-  3588990; (* x *)
-  4351953; (* y *)
-  1433913; (* z *)
-|]
+  let fr = [|
+    70924245; (* a *)
+    10817171; (* b *)
+    30764083; (* c *)
+    34914685; (* d *)
+    137301681; (* e *)
+    10579192; (* f *)
+    11684140; (* g *)
+    10583562; (* h *)
+    63139805; (* i *)
+    3276064; (* j *)
+    2747547; (* k *)
+    47171247; (* l *)
+    24894034; (* m *)
+    60728196; (* n *)
+    48132617; (* o *)
+    23647179; (* p *)
+    6140307; (* q *)
+    57656209; (* r *)
+    61882785; (* s *)
+    56267109; (* t *)
+    43069799; (* u *)
+    10590858; (* v *)
+    1653435; (* w *)
+    3588990; (* x *)
+    4351953; (* y *)
+    1433913; (* z *)
+  |]
+end
 
 let cumulative occurrences =
   (* Build the cumulative occurrences array *)
