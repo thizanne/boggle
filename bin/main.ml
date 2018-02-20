@@ -2,7 +2,7 @@ open Boggle
 
 let compare w1 w2 =
   if String.length w1 = String.length w2
-  then Pervasives.compare w1 w2
+  then String.compare w1 w2
   else String.length w2 - String.length w1
 
 let get_lexicon_filename () =
