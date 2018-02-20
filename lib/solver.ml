@@ -7,13 +7,15 @@ let rec backtrack board lexicon path (i, j) =
     if Lexicon.is_empty lexicon'
     then Iter.empty
     else
+      let sol_current_path =
+        if Lexicon.has_empty_word lexicon'
+        then Iter.singleton path'
+        else Iter.empty in
       let solutions_through_neighbours =
         Board.neighbours board (i, j)
         |> Iter.flat_map (backtrack board lexicon' path')
       in
-      if Lexicon.has_empty_word lexicon'
-      then Iter.cons path' solutions_through_neighbours
-      else solutions_through_neighbours
+      Iter.append sol_current_path solutions_through_neighbours
 
 let find_all_paths board lexicon =
   Board.all_positions board
