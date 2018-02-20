@@ -12,17 +12,15 @@ val dim : t -> int
 (** La dimension d'une grille, c'est à dire le nombre de lignes (qui
     est égal au nombre de colonnes). *)
 
-val is_valid_pos : t -> int * int -> bool
-(** Est-ce qu'un couple (numéro de ligne, numéro de colonne)
-   correspond à une position valide sur la grille ? *)
-
 val all_positions : t -> (int * int) Iter.t
-(** Un itérateur sur toutes les positions valides d'une grille. *)
+(** Un itérateur sur toutes les positions (ligne, colonne) d'une
+   grille. *)
 
 val are_neighbours : t -> int * int -> int * int -> bool
 (** Est-ce que deux cases données par leurs positions sont voisines ?
    Deux cases sont voisines si elles se "touchent" par un côté ou en
-   diagonale. *)
+   diagonale. On considèrera que les cases données sont des cases
+   valides sur la grille. *)
 
 val neighbours : t -> int * int -> (int * int) Iter.t
 (** Un itérateur sur les cases voisines d'une case donnée. *)
