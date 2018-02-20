@@ -1,5 +1,8 @@
 * Boggle
 
+A [[https://en.wikipedia.org/wiki/Boggle][Boggle]] game implementation in OCaml, also meant as a student
+project.
+
 ** Build
 
 =$ jbuilder build=
