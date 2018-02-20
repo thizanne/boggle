@@ -125,11 +125,11 @@ adjacentes (par un côté ou par un coin) de la grille. Une lettre de la
 grille ne peut être présente qu'au plus une fois dans un mot
 formé.
 
-Toutes les formes des mots sont autorisées : verbes conjugués,
-pluriels, féminin... Les lettres étant non-accentuées, on retire aussi
-les accents sur les mots (par exemple, le mot ~"hypothese"~ est un mot
-français valide). On fixe une longueur minimale aux mots à former :
-dans le Boggle classique, elle est de 3. D'autres versions
+Toutes les formes des mots sont autorisées : verbe conjugué, pluriel,
+féminin... Les lettres étant non-accentuées, on retire aussi les
+accents sur les mots (par exemple, le mot ~"hypothese"~ sera considéré
+comme un mot français valide). On fixe une longueur minimale aux mots
+à former : dans le Boggle classique, elle est de 3. D'autres versions
 proposent 2. Ces questions seront résolues en spécifiant explicitement
 dans un fichier tous les mots autorisés.
 
@@ -266,7 +266,7 @@ Le module ~Board~ vous servira d'échauffement avant de vous attaquer
 au reste du projet : il s'agit d'implémenter diverses fonctions
 simples pour gérer les tableaux de Boggle.
 
-Un tableau de Boggle sera représenté par un tableaux de tableaux de
+Un tableau de Boggle sera représenté par un tableau de tableaux de
 caractères : ~char array array~. Pensez à la fonction
 ~Array.make_matrix~ de la librairie standard d'OCaml pour créer des
 tableaux. Pour écrire ~from_string~, vous pouvez utiliser la fonction
@@ -344,10 +344,10 @@ retourner.
 
 Bien sûr, lorsqu'on essayera d'appliquer un itérateur comme ~all_nat~
 à une fonction comme ~print_int~, cet appel ne terminera pas : on ne
-peut pas évidemment pas énumérer une séquence infinie d'éléments dans
-un programme. Cependant, il est possible d'écrire une fonction qui
-garde par exemple uniquement les ~n~ premiers éléments d'une séquence,
-ce qui permet ainsi de travailler avec des séquences infinies au cours
+peut évidemment pas énumérer une séquence infinie d'éléments dans un
+programme. Cependant, il est possible d'écrire une fonction qui garde
+par exemple uniquement les ~n~ premiers éléments d'une séquence, ce
+qui permet ainsi de travailler avec des séquences infinies au cours
 d'un programme avant de les tronquer lorsqu'on a besoin d'énumérer
 explicitement leurs éléments. Ce projet ne fera toutefois pas
 intervenir de séquences infinies, vous n'aurez donc pas ce genre de
@@ -371,7 +371,7 @@ indique quelles sont les fonctions qui doivent forcer leurs
 paramètres.
 
 Pour programmer ce module, il est très fortement conseillé de tester
-ses fonctions au fur et à mesure, en construisant des itérateurs
+les fonctions au fur et à mesure, en construisant des itérateurs
 simples à la main. Une fois que vous aurez bien compris comment cette
 représentation fonctionne, toutes les fonctions demandées sont très
 simples (la plupart s'écrivent d'ailleurs en une ligne).
@@ -478,7 +478,7 @@ correspondent à un mot appartenant au langage représenté.
 
 La Figure [[fig:arbre-prefixe]] montre un exemple d'arbre préfixe. Les
 noeuds pleins indiquent qu'il s'agit d'une fin de mot du
-langage. Ainsi, l'ensemble de mot représenté contient par exemple les
+langage. Ainsi, l'ensemble de mots représenté contient par exemple les
 mots /ami/, /tas/, /tasse/ et /tire/, mais pas le mot /tass/, qui
 n'arrive pas sur un noeud « fin de mot ».
 
@@ -579,7 +579,7 @@ Le module ~Solver~ fournit une méthode de résolution de grilles de
 Boggle, qui trouve tous les mots formables.
 
 On utilisera à cette fin la technique du /retour sur trace/, aussi
-appelée /backtracking/[fn:backtracking]. Le retour sur trace est une
+appelée /backtracking/ [fn:backtracking]. Le retour sur trace est une
 technique de programmation, ainsi qu'une famille d'algorithmes qui la
 mettent en oeuvre, consistant à prendre des décisions pour faire
 avancer la résolution d'un problème et à revenir en arrière en cas de
@@ -708,8 +708,10 @@ afficher un message vous invitant au travail.
 
 On prendre comme mots valides la liste des mots du fichier
 ~dict/dico_fr.txt~ de 3 lettres ou plus. Attention : vous n'avez pas
-le droit de modifier ce fichier ! Utilisez les fonctions que vous avez
-écrites pour construire cette liste.
+le droit de modifier ce fichier ! Vous n'avez pas non plus le droit
+d'en créer un autre qui contienne uniquement les mots de plus de
+3 lettres. Utilisez les fonctions que vous avez écrites pour
+construire cette liste.
 
 Exécuté avec la commande ~$ jbuilder exec boggle~, le programme doit :
 
@@ -905,7 +907,7 @@ tableaux de tableaux de caractères : ~char array array~. À l'intérieur
 du module, donc dans le fichier ~board.ml~, vous utiliserez cette
 représentation pour écrire les différentes fonctions. À l'extérieur du
 module, vous ne pourrez pas générer une valeur de type ~Board.t~ en
-déclarant un tableaux de tableaux de caractères, par plus que vous ne
+déclarant un tableaux de tableaux de caractères, pas plus que vous ne
 pourrez utiliser les fonctions habituellement disponibles sur les
 tableaux pour manipuler un ~Board.t~. Vous serez limités aux fonctions
 exportées par le module ~Board~.
