@@ -1,7 +1,8 @@
 #+latex-class: article
 #+title: Boggle
 #+subtitle: Projet MPIL 2018 @@latex:\\@@ Première partie
-#+options: toc:nil date:nil author:nil
+#+author: Thibault Suzanne @@latex:\\ \hrefmail{thi.suzanne@gmail.com}@@
+#+options: toc:nil date:nil
 #+latex_header: \input{util.tex}
 
 #+BEGIN_flushright
@@ -72,14 +73,6 @@ peuvent le cas échéant vous apporter des informations utiles.
 * Déroulement du projet et consignes générales
 <<sec:consignes-generales>>
 
-** Téléchargement du code de base
-
-Le squelette du projet est disponible à l'adresse
-[[https://www.di.ens.fr/~suzanne/misc/boggle.tar.gz]]. Téléchargez
-l'archive et dézippez la (=$ tar xzvf boggle.tar.gz= sous Linux). Elle
-contient un dossier =boggle= contenant lui-même le squelette du projet
-(ainsi qu'une copie PDF de cet énoncé).
-
 ** Travail demandé
 
 La suite de cet énoncé présente différents /modules/, regroupés dans
@@ -89,13 +82,41 @@ dans les fichiers spécifiés, puis à écrire le programme principal qui
 respecte les spécifications demandées
 (cf. Section [[sec:programme-final]]).
 
-L'archive que vous avez téléchargée contient le squelette d'une
+Vous allez télécharger une archive qui contient le squelette d'une
 implémentation OCaml du projet. Vous pouvez si vous y tenez
 implémenter ce projet dans un autre langage du cours MPIL (Swift ou
 F\sharp), mais il est alors *impératif* que vous suiviez
 rigoureusement l'architecture du projet telle qu'elle est définie dans
 cet énoncé (les différents répertoires comme l'organisation des
 modules).
+
+** Téléchargement du squelette
+
+Le squelette du projet est disponible à l'adresse
+[[https://www.di.ens.fr/~suzanne/misc/boggle.tar.gz]]. Téléchargez
+l'archive et dézippez la (=$ tar xzvf boggle.tar.gz= sous Linux). Elle
+contient un dossier =boggle= contenant lui-même le squelette du projet
+(ainsi qu'une copie PDF de cet énoncé).
+
+** Mise en place de l'environnement
+
+Le projet est prévu pour compiler dans l'environnement de la PPTI,
+auquel on a ajouté et configuré /opam/, le gestionnaire de paquets
+moderne pour OCaml. Vous n'avez pas besoin de manipuler opam par
+vous-mêmes, mais vous avez besoin de configurer votre shell afin
+d'intégrer son environnement. Pour cela, ajoutez les lignes suivantes
+à votre fichier =~/.bashrc= (ou l'équivalent si vous utilisez un autre
+shell) :
+
+#+BEGIN_SRC bash
+# OPAM configuration
+eval $(opam config env --root="/users/Enseignants/suzanne/.opam")
+#+END_SRC
+
+Si vous avez déjà une ligne similaire, remplacez la par celle-ci. En
+cas de doute, envoyez un mail
+à \hrefmail{thi.suzanne@gmail.com}. Relancez ensuite bash pour
+recharger cette configuration.
 
 ** Environnement, compilation et exécution
 
@@ -105,18 +126,19 @@ l'exécute. Ces deux commandes fonctionnent par défaut dans
 l'environnement OCaml de la PPTI.
 
 Les rendus qui ne *compilent pas* avec ces commandes dans
-l'environnement de la PPTI *ne seront pas corrigés*. Il est inutile de
-rendre une fonction qui ne compile même pas en espérant qu'elle soit
-correcte : pour des raisons évidentes, elle n'a aucune chance de
-l'être...
+l'environnement de la PPTI (avec la configuration précédemment
+indiquée) *ne seront pas corrigés*. Il est inutile de rendre une
+fonction qui ne compile même pas en espérant qu'elle soit correcte :
+pour des raisons évidentes, elle n'a aucune chance de l'être...
 
 Le squelette OCaml contient une version préécrite de ces commandes. Si
 vous utilisez un autre langage, vous devrez écrire un =Makefile= et un
 script =run.sh= qui respectivement compile et exécute le projet dans
 l'environnement par défaut de la PPTI (c'est-à-dire l'environnement de
-base accessible à un nouvel utilisateur). L'exigence est la même que
-pour OCaml : les projets qui ne compilent pas ou ne s'exécutent pas
-avec ces commandes ne seront pas corrigés.
+base accessible à un nouvel utilisateur, sans configuration
+supplémentaire). L'exigence est la même que pour OCaml : les projets
+qui ne compilent pas ou ne s'exécutent pas avec ces commandes ne
+seront pas corrigés.
 
 L'environnement de compilation et d'exécution en OCaml proposé dans le
 squelette utilise =jbuilder=. La Section [[sec:jbuilder]] en annexe
@@ -287,9 +309,9 @@ opérations qui forcent l'itérateur ont une complexité linéaire en la
 taille de la séquence sous-jacente (elles ne terminent donc pas si
 cette séquence est infinie).
 
-Les itérateurs sont semblables aux /streams/ que vous avez déjà vu,
+Les itérateurs sont semblables aux /streams/ que vous avez déjà vus,
 mais ils sont purement fonctionnels : parcourir un itérateur en le
-forçant ne le consume pas, il reste utilisable. Ainsi on peut obtenir
+forçant ne le consomme pas, il reste utilisable. Ainsi on peut obtenir
 le comportement suivant :
 
 #+BEGIN_SRC ocaml
@@ -303,19 +325,21 @@ val x : int Iter.t = <fun>
 
 *** Board
 
+/L'interface de ce module vous est fournie : à vous de compléter son
+implémentation./
+
 Le module ~Board~ vous servira d'échauffement avant de vous attaquer
 au reste du projet : il s'agit d'implémenter diverses fonctions
 simples pour gérer les tableaux de Boggle.
 
-Un tableau de Boggle sera représenté par un tableau de tableaux de
-caractères : ~char array array~. Pensez à la fonction
-~Array.make_matrix~ de la librairie standard d'OCaml pour créer des
-tableaux. Pour écrire ~from_string~, vous aurez besoin de calculer la
-dimension de la grille à générer. Vous pouvez pour cela utiliser la
-fonction ~sqrt : float -> float~ qui calcule la racine carrée d'un
-nombre (flottant !).
+Un tableau de Boggle sera simplement représenté par un tableau de
+tableaux de caractères : ~char array array~. Les fonctions
+à implémenter ne devraient pas poser de problème particulier.
 
 *** Lexicon
+
+/L'interface de ce module vous est fournie : à vous de compléter son
+implémentation./
 
 Le module ~Lexicon~ implémente des /lexiques/, c'est-à-dire des
 ensembles de mots. Ces ensembles sont implémentés sous la forme
@@ -460,6 +484,9 @@ final.
 
 *** Path
 
+/L'interface de ce module vous est fournie : à vous de compléter son
+implémentation./
+
 Le module ~Path~ est un module assez simple qui vous servira
 à manipuler des /chemins/ sur une grille de Boggle. Un chemin est une
 séquence de cases de la grille qui respecte les deux invariants
@@ -492,6 +519,9 @@ présent qu'une seule fois).
 
 *** Solver
 
+/L'interface de ce module vous est fournie : à vous de compléter son
+implémentation./
+
 Le module ~Solver~ fournit une méthode de résolution de grilles de
 Boggle, qui trouve tous les mots formables.
 
@@ -510,7 +540,7 @@ avec ce chiffre, et s'il s'avère qu'elle est impossible, on efface le
 chiffre et on en essaye un autre.
 
 L'application du backtracking au Boggle consiste schématiquement
-à ajouter des cases à un chemin jusqu'à qu'on ne puisse plus former
+à ajouter des cases à un chemin jusqu'à ce qu'on ne puisse plus former
 aucun mot avec le chemin en cours (en calculant successivement les
 suffixes de chaque lettre qu'on ajoute). À chaque fois qu'on arrive
 sur une fin de mot possible, on ajoute le mot aux solutions.
@@ -596,6 +626,8 @@ implémentés.
 ** Le programme final
 <<sec:programme-final>>
 
+/C'est à vous d'implémenter ce programme./
+
 Une fois tous les différents modules de la bibliothèque implémentés et
 testés, il ne vous reste plus qu'à écrire le programme final. Le
 fichier correspondant est =bin/main.ml=. Il est compilé avec la
@@ -615,14 +647,14 @@ construire cette liste.
 Exécuté avec la commande ~$ ./run.sh~, le programme doit :
 
 1. Afficher une grille de Boggle aléatoire, avec la fréquence des
-   lettres adaptée au français
+   lettres adaptée au français.
 2. Immédiatement afficher un message invitant l'utilisateur à appuyer
    sur \keyenter.
-3. Attendre que l'utilisateur appuie sur \keyenter.
+3. Attendre que l'utilisateur appuie sur \keyenter. [fn:read_line]
 4. Afficher toutes les solutions de la grille (rappel : d'au moins
    3 lettres), classées par ordre décroissant de longueur puis par
-   ordre alphabétique croissant. Chaque mot ne doit être affiché
-   qu'une seule fois.
+   ordre alphabétique croissant. [fn:sort] Chaque mot ne doit être
+   affiché qu'une seule fois.
 
 Ce programme peut également prendre un paramètre dans la ligne de
 commande, qui lui sera alors passé de la façon suivante : ~./run.sh
@@ -643,54 +675,22 @@ supplémentaire, vous pouvez donc vérifier que la longueur du tableau
 est supérieure ou égale à 2, et le cas échéant, accéder à ce paramètre
 par la valeur de ~Sys.argv.(1)~.
 
-Voici quelques précisions supplémentaires :
+Vous pourrez utiliser les modules de la bibliothèque que vous avez
+écrits en les préfixant par ~Boggle.~, par exemple :
+~Boggle.Lexicon.has_empty_word~. Vous pouvez également ajouter ~open
+Boggle~ en haut de votre fichier pour pouvoir utiliser directement
+~Lexicon.has_empty_word~.
 
-- Vous pourrez utiliser les modules de la bibliothèque que vous avez
-  écrits en les préfixant par ~Boggle.~, par exemple :
-  ~Boggle.Lexicon.has_empty_word~. Vous pouvez également ajouter ~open
-  Boggle~ en haut de votre fichier pour pouvoir utiliser directement
-  ~Lexicon.has_empty_word~.
-- Deux opérations du programme peuvent échouer (des fonctions liées
-  renvoyant alors ~None~) :
-  - La lecture du fichier lexique, si vous n'exécutez pas la commande
-    depuis la racine du projet.
-  - La construction de la grille, si le paramètre ne comporte pas un
-    nombre carré de lettres.
-  Dans ces deux cas, le programme devra terminer prématurément en
-  affichant un message décrivant l'erreur rencontrée. Pour terminer le
-  programme OCaml, vous pourrez écrire ~exit 1~.
+Des opérations du programme peuvent échouer, notamment :
+- La lecture du fichier lexique, si vous n'exécutez pas la commande
+  depuis la racine du projet.
+- La construction de la grille, si le paramètre ne comporte pas un
+  nombre carré de lettres.
 
-Pour attendre que l'utilisateur appuie sur \keyenter, vous pouvez
-utiliser la fonction ~read_line : unit -> string~, qui laisse
-l'utilisateur entrer une chaîne de caractère, valider avec \keyenter,
-et renvoie la chaîne en question. Ici, l'utilisateur ne rentrera pas
-de chaîne de caractère (s'il le fait, vous pouvez simplement
-l'ignorer). Pour obtenir une expression de type ~unit~ (que vous
-pouvez ensuite mettre dans une suite d'instructions impératives
-séparées par ~;~ sans avertissement du compilateur), vous pourrez
-alors utiliser la fonction ~ignore : 'a -> unit~, au nom explicite, en
-écrivant par exemple : ~ignore (read_line ())~.
-
-Pour trier l'ensemble des mots, il est conseillé de passer par les
-listes. Une fois que vous avez obtenu l'ensemble final des solutions,
-vous disposez des fonctions nécessaires pour le transformer en une
-liste de mots (uniques). Vous pouvez alors utiliser la fonction
-~List.sort : ('a -> 'a -> int) -> 'a list -> 'a list~ pour la trier.
-
-~List.sort~ trie une liste (son deuxième paramètre) en ordre
-/croissant/. Le premier paramètre est une /fonction de comparaison/
-qui sert à spécifier cet ordre : elle prend en paramètre deux éléments
-et doit renvoyer ~0~ s'ils sont égaux, un nombre strictement négatif
-si le premier est strictement inférieur au deuxième, et un nombre
-strictement positif s'il lui est strictement supérieur. C'est donc en
-choisissant la bonne fonction que vous obtiendrez l'ordre voulu.
-
-Pour écrire cette fonction de comparaison, vous pourrez utiliser la
-fonction ~String.length~, qui donne la longueur d'une chaîne, et la
-fonction ~String.compare : string -> string -> int~, qui compare deux
-chaînes (en suivant les même conventions que le paramètre de
-~List.sort~) selon l'ordre alphabétique (donc sans considération de
-taille).
+Dans ces deux cas, la fonction correspondante renvoie ~None~. Le
+programme devra alors terminer prématurément en affichant un message
+décrivant l'erreur rencontrée. Pour terminer le programme OCaml, vous
+pourrez écrire ~exit 1~.
 
 * Conclusion
 
@@ -899,3 +899,7 @@ fichier dont le contenu est rappelé ici est situé dans le répertoire
 
 [fn:backtracking] Bien qu'anglais, ce mot est quasi-systématiquement
 utilisé, y compris en français.
+
+[fn:read_line] Conseil : utilisez ~read_line~.
+
+[fn:sort] Conseil : passez par les listes et utilisez ~List.sort~.
