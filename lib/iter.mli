@@ -7,7 +7,13 @@
    même sur des itérateurs infinis. *)
 
 type 'a t = ('a -> unit) -> unit
-(** Un itérateur de valeurs de type ['a] *)
+(** Un itérateur de valeurs de type ['a].
+
+    Ce type n'est pas abstrait. Vous pourrez donc l'utiliser
+    directement dans les autres modules, bien que ce ne soit ni
+    nécessaire ni conseillé dans le cadre de ce projet, les fonctions
+    exportées par ce module étant suffisantes.
+*)
 
 val empty: 'a t
 (** L'itérateur sur 0 élément. *)
