@@ -5,6 +5,7 @@ all:
 .PHONY: clean
 clean:
 	jbuilder clean
+	rm boggle.install
 
 .PHONY: doc
 doc:
