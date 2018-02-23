@@ -18,7 +18,7 @@ Victor Hugo, /Les Contemplations (1856)/ \\
 
 * Introduction
 
-/Boggle/ est un jeu de lettres où les joueurs doivent, en temps
+/Boggle/ [fn:boggle] est un jeu de lettres où les joueurs doivent, en temps
 limité, former des mots à l'aide de lettres disposées aléatoirement
 sur un plateau carré. Deux lettres consécutives dans un mot doivent
 être adjacentes sur le plateau (elles doivent « se toucher »,
@@ -50,20 +50,35 @@ moteur de jeu, ainsi qu'un générateur aléatoire de grilles et un
 solveur trouvant tous les mots du plateau. La deuxième partie ajoutera
 une interface graphique permettant de jouer en solitaire.
 
-Cet énoncé comporte \pageref{LastPage} pages. Ne soyez pas intimidé ou
+Cet énoncé comporte \pageref{before-appendices} pages
+(\pageref{LastPage} avec les Annexes). Ne soyez pas intimidé ou
 découragé : il est long parce que très détaillé. Prenez donc le temps
 de le lire attentivement, et votre travail de programmation sur le
 projet n'en sera que plus facile.
 
+La Section [[sec:consignes-generales]] donne les consignes générales
+à suivre pour réaliser ce projet. La Section [[sec:enonce-detaille]]
+détaille l'énoncé et précise le travail à réaliser.
+
+En Annexe, la Section [[sec:jbuilder]] détaille l'utilisation de
+=jbuilder=, un système de compilation pour OCaml utilisé par défaut
+dans le projet. La Section [[sec:introduction-modules]] constitue un
+rappel du fonctionnement de la programmation modulaire en OCaml. La
+Section [[sec:interfaces]] indique les interfaces des différents modules
+à implémenter (cf. Section [[sec:enonce-detaille]]). Vous n'êtes pas
+obligés de lire ces annexes pour réaliser le projet, mais elles
+peuvent le cas échéant vous apporter des informations utiles.
+
 * Déroulement du projet et consignes générales
+<<sec:consignes-generales>>
 
 ** Téléchargement du code de base
 
 Le squelette du projet est disponible à l'adresse
-[[https://www.di.ens.fr/~suzanne/misc/boggle.zip]]. Téléchargez l'archive
-et dézippez la (=$ unzip boggle.zip= sous Linux). Elle contient un
-dossier =boggle= contenant lui-même le squelette du projet (ainsi
-qu'une copie PDF de cet énoncé).
+[[https://www.di.ens.fr/~suzanne/misc/boggle.tar.gz]]. Téléchargez
+l'archive et dézippez la (=$ tar xzvf boggle.tar.gz= sous Linux). Elle
+contient un dossier =boggle= contenant lui-même le squelette du projet
+(ainsi qu'une copie PDF de cet énoncé).
 
 ** Travail demandé
 
@@ -73,6 +88,40 @@ une /bibliothèque/, et un /programme principal/. Votre tâche consiste
 dans les fichiers spécifiés, puis à écrire le programme principal qui
 respecte les spécifications demandées
 (cf. Section [[sec:programme-final]]).
+
+L'archive que vous avez téléchargée contient le squelette d'une
+implémentation OCaml du projet. Vous pouvez si vous y tenez
+implémenter ce projet dans un autre langage du cours MPIL (Swift ou
+F\sharp), mais il est alors *impératif* que vous suiviez
+rigoureusement l'architecture du projet telle qu'elle est définie dans
+cet énoncé (les différents répertoires comme l'organisation des
+modules).
+
+** Environnement, compilation et exécution
+
+Le projet est fourni avec un =Makefile= et un script =run.sh=. La
+commande =$ make= compile le projet, et la command =$ ./run.sh=
+l'exécute. Ces deux commandes fonctionnent par défaut dans
+l'environnement OCaml de la PPTI.
+
+Les rendus qui ne *compilent pas* avec ces commandes dans
+l'environnement de la PPTI *ne seront pas corrigés*. Il est inutile de
+rendre une fonction qui ne compile même pas en espérant qu'elle soit
+correcte : pour des raisons évidentes, elle n'a aucune chance de
+l'être...
+
+Le squelette OCaml contient une version préécrite de ces commandes. Si
+vous utilisez un autre langage, vous devrez écrire un =Makefile= et un
+script =run.sh= qui respectivement compile et exécute le projet dans
+l'environnement par défaut de la PPTI (c'est-à-dire l'environnement de
+base accessible à un nouvel utilisateur). L'exigence est la même que
+pour OCaml : les projets qui ne compilent pas ou ne s'exécutent pas
+avec ces commandes ne seront pas corrigés.
+
+L'environnement de compilation et d'exécution en OCaml proposé dans le
+squelette utilise =jbuilder=. La Section [[sec:jbuilder]] en annexe
+développe son utilisation, ainsi que des commandes supplémentaires qui
+peuvent vous servir.
 
 ** Rendu
 
@@ -91,27 +140,18 @@ le dossier =boggle_<votrenom>=* et exécutez la commande suivante :
 
 Vérifiez que l'archive ainsi générée (qui doit s'appeler
 =boggle_<votrenom>.zip=) contient bien un dossier =boggle_<votrenom>=
-qui contient lui-même votre code.
+qui contient lui-même votre code. Vous pouvez par exemple exécuter la
+commande suivante dans l'environnement de la PPTI (dans lequel elle
+doit fonctionner) :
 
-*Les rendus ne respectant pas ces consignes ne seront pas corrigés !*
-Assurez-vous de les avoir comprises et n'attendez pas la dernière
-minute pour manquer le rendu à cause de la précipitation...
+: $ unzip boggle_<votrenom>.zip
 
-De même, *les rendus qui ne compilent pas* avec les commandes
-indiquées dans cet énoncé *ne seront pas corrigés*. Le squelette
-fourni compile : si votre résultat ne compile plus, c'est parce que
-vous avez introduit une erreur dans une fonction. Il est inutile de
-rendre une fonction qui ne compile même pas en espérant qu'elle soit
-correcte : pour des raisons évidentes, elle n'a aucune chance de
-l'être... Ainsi, si vous êtes bloqués sur une fonction au point de ne
-pas réussir à en écrire une version qui compile, vous pourrez
-simplement revenir à la version du squelette. Si vous n'utilisez pas
-de gestionnaire de version, d'une part il est temps
-d'apprendre[fn:git], d'autre part pensez à faire des sauvegardes
-régulières de votre projet dans un état qui compile pour éviter de ne
-plus savoir y retourner...
+*Les rendus ne respectant pas strictement ces consignes ne seront pas
+corrigés !* Assurez-vous de les avoir comprises et n'attendez pas la
+dernière minute pour manquer le rendu à cause de la précipitation...
 
 * Énoncé détaillé
+<<sec:enonce-detaille>>
 
 ** Rappel des règles du jeu
 
@@ -168,42 +208,7 @@ Certains fichiers sont déjà présents dans ces dossiers, comme
 ~boggle.opam~ ou ~jbuild~. *Vous ne devez pas les supprimer :* ils
 sont nécessaires pour la compilation du projet avec les outils
 choisis. En cas de suppression accidentelle, vous pouvez simplement
-les récupérer dans l'archive initiale et les recopier. Si vous
-souhaitez utiliser merlin pour programmer, des fichiers ~.merlin~ sont
-également fournis.
-
-*** Utilisation de jbuilder
-<<sec:utilisation-jbuilder>>
-
-Le projet utilise ~jbuilder~ (qui sera bientôt renommé ~dune~), un
-système de compilation moderne pour OCaml. Les fichiers nécessaires
-à son bon fonctionnement vous sont fournis. Vous n'avez plus qu'à
-utiliser les commandes suivantes (à la racine du projet) :
-
-- ~jbuilder build lib/.merlin~ : :: génère le fichier
-     ~lib/.merlin~. Vous pouvez également générer ~bin/.merlin~, pour
-     utiliser merlin lors de l'édition des différents
-     fichiers. *Note :* comme indiqué précédemment, les fichiers
-     ~.merlin~ vous sont déjà fournis, vous n'avez donc normalement
-     pas besoin de cette commande.
-- ~jbuilder build @doc~ : :: génère la documentation de l'interface
-     des différents modules de la bibliothèque ~Boggle~. Vous pouvez
-     ensuite consulter cette documentation en ouvrant avec votre
-     navigateur le fichier
-     ~_build/default/_doc/boggle/Boggle/index.html~. Elle vous servira
-     de guide pour l'implémentation des différentes fonctions.
-- ~jbuilder build~ : :: compile la librairie ~Boggle~ et l'exécutable
-     ~boggle~ (qu'on vous demande de programmer).
-- ~jbuilder exec boggle [args]~ : :: lance l'exécutable ~boggle~ avec
-     les paramètres optionnels ~args~ (voir la
-     section [[sec:programme-final]]).
-- ~jbuilder utop~ : :: lance ~utop~, un terminal OCaml, en chargeant
-     automatiquement la librairie ~Boggle~. *Cette commande est très
-     utile pour tester votre implémentation des différents modules*.
-- ~jbuilder clean~ : :: supprime les fichiers générés par ~jbuilder~
-     pour repartir à neuf. Attention, cette commande supprime
-     également la documentation et les fichiers ~.merlin~, il faudra
-     les générer à nouveau.
+les récupérer dans l'archive initiale et les recopier.
 
 ** Les différents modules
 <<sec:differents-modules>>
@@ -218,11 +223,6 @@ Les modules sont présentés ici dans l'ordre qu'on vous conseille
 d'adopter pour les programmer, mais vous êtes libres de le faire dans
 un autre ordre.
 
-Si vous n'avez pas encore écrit de programme OCaml réparti dans
-plusieurs fichiers, la section [[sec:introduction-modules]] présente une
-courte introduction à la programmation modulaire. Vous étudierez ce
-sujet plus en détail plus tard dans le cours.
-
 Chaque module est fourni avec un module d'implémentation factice qui
 appelle ~failwith "Unimplemented"~ pour chaque fonction demandée. On
 a ainsi un projet qui compile même lorsque les fonctions demandées ne
@@ -235,16 +235,26 @@ déjà complétées, d'autres ont simplement comme code la ligne ~failwith
 sert simplement à avoir un projet qui compile correctement) par une
 implémentation correcte de chaque fonction.
 
+Les fonctions à compléter impérativement sont celles qui apparaissent
+dans les fichiers ~nomDuModule.mli~ correspondant aux modules
+considérés. Elles sont accompagnées d'une courte documentation
+expliquant le fonctionnement attendu. Certains fichiers contiennent
+d'autre fonctions, suggérées pour guider votre travail : vous pouvez
+choisir de ne pas les implémenter si vous avez en tête une solution
+différente pour les fonctions obligatoires.
+
 *** RandomLetter
+
+/Ce module est déjà implémenté : vous pouvez l'utiliser directement./
 
 ~RandomLetter~ est un module permettant de choisir une lettre
 aléatoirement, en fonction d'une certaine /distribution/, c'est-à-dire
 de la probabilité d'apparition de chaque lettre dans un texte choisi
 au hasard.
 
-Ce module fonctionne à l'aide d'une /fonction d'ordre supérieure/ qui
-prend en paramètre une distribution et renvoie une fonction, de type
-~unit -> char~, qui renvoie elle-même un caractère aléatoire à chaque
+Il fonctionne à l'aide d'une /fonction d'ordre supérieur/ qui prend en
+paramètre une distribution et renvoie une fonction, de type ~unit ->
+char~, qui renvoie elle-même un caractère aléatoire à chaque
 appel. Lorsque vous souhaitez tirer des lettres aléatoirement, le
 style conseillé est donc de commencer par déclarer une fonction
 ~picker~ qui fera le tirage, puis d'appeler cette fonction. La
@@ -260,6 +270,37 @@ française.
 Pour utiliser ces distributions en dehors du module ~RandomLetter~, il
 suffit d'écrire par exemple ~RandomLetter.Distribution.fr~.
 
+*** Iter
+
+/Ce module est déjà implémenté : vous pouvez l'utiliser directement./
+
+~Iter~ est un module implémentant des /itérateurs/ sur des valeurs
+d'un certain type. Ces itérateurs correspondent à des /séquences/
+d'éléments de ce type, c'est à dire d'un certain nombre,
+éventuellement infini, d'éléments qui se suivent. Les itérateurs
+seront utilisés dans plusieurs modules du projet.
+
+L'interface du module précise toutes les fonctions qu'il
+exporte. Toutes les fonctions qui ne forcent par l'itérateur (voir la
+documentation dans =Iter.mli=) s'exécutent en temps constant. Les
+opérations qui forcent l'itérateur ont une complexité linéaire en la
+taille de la séquence sous-jacente (elles ne terminent donc pas si
+cette séquence est infinie).
+
+Les itérateurs sont semblables aux /streams/ que vous avez déjà vu,
+mais ils sont purement fonctionnels : parcourir un itérateur en le
+forçant ne le consume pas, il reste utilisable. Ainsi on peut obtenir
+le comportement suivant :
+
+#+BEGIN_SRC ocaml
+# let x = Iter.range 0 9;;
+val x : int Iter.t = <fun>
+# Iter.iter print_int x;;
+0123456789- : unit = ()
+# Iter.iter print_int x;;
+0123456789- : unit = ()
+#+END_SRC
+
 *** Board
 
 Le module ~Board~ vous servira d'échauffement avant de vous attaquer
@@ -269,144 +310,10 @@ simples pour gérer les tableaux de Boggle.
 Un tableau de Boggle sera représenté par un tableau de tableaux de
 caractères : ~char array array~. Pensez à la fonction
 ~Array.make_matrix~ de la librairie standard d'OCaml pour créer des
-tableaux. Pour écrire ~from_string~, vous pouvez utiliser la fonction
-~sqrt : float -> float~ qui calcule la racine carrée d'un nombre
-(flottant !).
-
-Le reste des fonctions ne devrait pas poser de problème
-particulier. Si vous choisissez d'implémenter ~Board~ avant ~Iter~
-(comme c'est conseillé), vous pouvez laisser de côté ~neighbours~ pour
-l'instant. La documentation guidera votre travail.
-
-*** Iter
-
-Le module ~Iter~ implémente des /itérateurs/ sur des valeurs d'un
-certain type. Ces itérateurs correspondent à des /séquences/
-d'éléments de ce type, c'est à dire d'un certain nombre,
-éventuellement infini, d'éléments qui se suivent. Les itérateurs
-seront utilisés dans plusieurs modules du projet.
-
-Vous connaissez déjà une structure pour représenter des séquences
-d'éléments : la liste. Elle consiste à garder tous les éléments de la
-séquence en mémoire, en utilisant le constructeur ~::~ pour lier un
-élément aux éléments suivants.
-
-Cette technique fonctionne bien pour des petites listes d'éléments,
-mais elle présente plusieurs inconvénients :
-
-- Elle nécessite de représenter tous les éléments en mémoire, ce qui
-  peut être problématique pour des séquences comprenant un nombre très
-  important d'éléments, et empêche de représenter des séquences
-  infinies comme « la séquence de tous les entiers : 0, 1, ... »
-- Une opération comme ~append : 'a list -> 'a list -> 'a list~, qui
-  concatène deux listes, nécessite de parcourir intégralement le
-  premier paramètre afin de pouvoir construire explicitement la liste
-  résultat en mémoire.
-
-Le module ~Iter~ résoudra ces problèmes en représentant une séquence
-d'éléments de type ~'a~ par une valeur de type ~('a -> unit) ->
-unit~. Concrètement, la séquence ~x_1, x_2, ...~ est représentée par
-la fonction d'ordre supérieure qui prend une fonction ~k~ en paramètre
-et qui applique successivement ~k~ à ~x1~, ~x2~, et ainsi de suite.
-
-On peut alors représenter une séquence même infinie efficacement : par
-exemple, la séquence des nombres entiers à partir de ~n~ est une
-fonction ~nat_from~ qui prend en paramètre une fonction ~k : int ->
-unit~ et qui appelle récursivement ~k~ sur ~n~, puis sur ~n + 1~, puis
-sur ~n + 2~, et ainsi de suite. Voici un exemple d'implémentation
-d'une telle fonction :
-
-#+BEGIN_SRC ocaml
-  # let rec nat_from n =
-      fun k ->
-        k n;
-        nat_from (n + 1) k
-  ;;
-  val nat_from : int -> (int -> 'a) -> 'b = <fun>
-  # let all_nat = nat_from 0;;
-  val all_nat : (int -> '_a) -> 'b = <fun>
-#+END_SRC
-
-On remarquera qu'on a pu définir sans problème la séquence de tous les
-entiers à partir de ~0~. On notera également que le type de ~nat_from~
-inféré par le compilateur contient les variables ~'a~ et ~'b~ au lieu
-de ~unit~ : c'est ici un détail technique qui n'a pas d'importance (de
-même pour ~all_nat~).
-
-Cette représentation résout également le problème de la concaténation
-de deux séquences ~s1~ et ~s2~ : en effet, il n'y a plus besoin
-d'énumérer explicitement les éléments de ~s1~. Il suffit de dire que
-l'itérateur sur la concaténation de ~s1~ et ~s2~ prend en paramètre
-une fonction ~k~, l'applique sur tous les éléments de ~s1~, puis sur
-tous les éléments de ~s2~. On dit que cette construction est
-/paresseuse/ : elle n'évalue pas totalement ses paramètres avant de
-retourner.
-
-Bien sûr, lorsqu'on essayera d'appliquer un itérateur comme ~all_nat~
-à une fonction comme ~print_int~, cet appel ne terminera pas : on ne
-peut évidemment pas énumérer une séquence infinie d'éléments dans un
-programme. Cependant, il est possible d'écrire une fonction qui garde
-par exemple uniquement les ~n~ premiers éléments d'une séquence, ce
-qui permet ainsi de travailler avec des séquences infinies au cours
-d'un programme avant de les tronquer lorsqu'on a besoin d'énumérer
-explicitement leurs éléments. Ce projet ne fera toutefois pas
-intervenir de séquences infinies, vous n'aurez donc pas ce genre de
-problème à résoudre (il est malgré tout important de comprendre
-comment elles fonctionnent afin d'être à l'aise avec le principe des
-itérateurs).
-
-Les plus attentifs d'entre vous auront remarqué que vous avez déjà
-utilisé des objets ressemblant à ces itérateurs : il s'agit des
-fonction ~iter~ proposées par différents modules, comme ~List~. En
-effet, si vous disposez d'une liste ~li~, la fonction ~fun k ->
-List.iter k li~ est exactement un itérateur sur les éléments de la
-liste !
-
-Bien sûr, se contenter de définir de tels itérateurs ne suffit pas
-dans un programme réel : il faut bien finir par faire quelque chose
-des éléments de ces séquences. Pour cela, on dit que certaines
-fonctions /forcent/ l'itérateur : elles construisent explicitement les
-éléments de la séquence sous-jacente. La documentation du module vous
-indique quelles sont les fonctions qui doivent forcer leurs
-paramètres.
-
-Pour programmer ce module, il est très fortement conseillé de tester
-les fonctions au fur et à mesure, en construisant des itérateurs
-simples à la main. Une fois que vous aurez bien compris comment cette
-représentation fonctionne, toutes les fonctions demandées sont très
-simples (la plupart s'écrivent d'ailleurs en une ligne).
-
-Il est particulièrement important d'aborder cet exercice la tête
-froide : l'attitude « j'écris des choses au hasard jusqu'à ce que ça
-marche » fonctionne rarement en programmation, et encore moins dans le
-cas présent. Utilisez une feuille de papier et réfléchissez avant
-d'écrire : si le code d'une fonction ne vous apparaît pas comme
-évident, c'est que vous n'avez pas encore assez réfléchi.
-
-Il est recommandé, bien que non obligatoire, d'adopter pour les
-différentes fonctions renvoyant un itérateur un style semblable
-à celui de ~nat_from~, c'est à dire de séparer visuellement les
-« vrais paramètres » de la fonction (ceux qui apparaissent dans la
-documentation) de la fonction ~k~ qui sera appliquée à chaque élément
-(et qui apparaît dans le type ~Iter.t~). Ainsi, on pourra écrire par
-exemple ~let map f s = fun k -> ...~. Ceci devrait aider à la
-compréhension du code.
-
-#+begin_remarque
-Vous aurez remarqué en lisant la documentation que le type ~Iter.t~
-n'est pas abstrait. Vous pourrez donc l'utiliser directement dans les
-autres modules, bien que ce ne soit ni nécessaire ni conseillé dans le
-cadre de ce projet, les fonctions exportées par ~Iter~ étant
-suffisantes. Ce choix a été fait parce que cette construction des
-itérateurs est assez répandue en programmation OCaml moderne, et qu'on
-préfère alors exporter le type pour rendre la création d'itérateurs
-plus facile, y compris sur des modules dont on ne peut pas modifier le
-code.
-
-Vous n'avez pas besoin de comprendre cette remarque dans le cadre du
-projet. N'hésitez pas à demander des précisions à vos encadrants pour
-en savoir plus si le sujet vous intéresse.
-#+end_remarque
+tableaux. Pour écrire ~from_string~, vous aurez besoin de calculer la
+dimension de la grille à générer. Vous pouvez pour cela utiliser la
+fonction ~sqrt : float -> float~ qui calcule la racine carrée d'un
+nombre (flottant !).
 
 *** Lexicon
 
@@ -414,12 +321,12 @@ Le module ~Lexicon~ implémente des /lexiques/, c'est-à-dire des
 ensembles de mots. Ces ensembles sont implémentés sous la forme
 d'/arbres préfixes/, ou /tries/.
 
-Dans un arbre préfixe, les noeuds ne stockent pas la chaîne à laquelle
+Dans un arbre préfixe, les nœuds ne stockent pas la chaîne à laquelle
 ils correspondent : c'est leur position dans l'arbre qui la
 définit. En effet, les /arêtes/ de l'arbre sont étiquetées par des
-caractères : pour connaître le mot associé à un noeud, il faut
-descendre vers ce noeud depuis la racine, et la suite de lettres
-rencontrées sur les arêtes forme le mot recherché. Les noeuds de
+caractères : pour connaître le mot associé à un nœud, il faut
+descendre vers ce nœud depuis la racine, et la suite de lettres
+rencontrées sur les arêtes forme le mot recherché. Les nœuds de
 l'arbre sont, eux, étiquetés par un booléen qui indique s'ils
 correspondent à un mot appartenant au langage représenté.
 
@@ -477,10 +384,10 @@ correspondent à un mot appartenant au langage représenté.
 \end{figure}
 
 La Figure [[fig:arbre-prefixe]] montre un exemple d'arbre préfixe. Les
-noeuds pleins indiquent qu'il s'agit d'une fin de mot du
+nœuds pleins indiquent qu'il s'agit d'une fin de mot du
 langage. Ainsi, l'ensemble de mots représenté contient par exemple les
 mots /ami/, /tas/, /tasse/ et /tire/, mais pas le mot /tass/, qui
-n'arrive pas sur un noeud « fin de mot ».
+n'arrive pas sur un nœud « fin de mot ».
 
 Lorsqu'on veut représenter des ensembles /de mots/, cette structure
 a plusieurs avantages par rapport aux représentations génériques des
@@ -503,10 +410,10 @@ utilisé) :
   grilles de Boggle.
 
 Le module ~Lexicon~ utilise un sous-module ~M~ qui implémente des
-tables d'association (clef, valeur), où la clef est un caractère (de
-type ~char~). On utilise à cette fin le module ~Map~ de la
-bibliothèque standard, dont la documentation est disponible
-à l'adresse
+tables d'association (clef \mapsto{} valeur) dans le type ~'a M.t~ : une
+clef est un caractère (de type ~char~), la valeur associée est de type
+~'a~. On utilise à cette fin le module ~Map~ de la bibliothèque
+standard, dont la documentation est disponible à l'adresse
 [[https://caml.inria.fr/pub/docs/manual-ocaml/libref/Map.Make.html]].
 
 Le module ~M~ fourni implémente également une fonction ~to_iter~ qui
@@ -528,13 +435,13 @@ type t = {
 #+END_SRC
 
 Pour comprendre cette définition, on peut la voir comme la
-représentation d'un lexique par son noeud racine. Le champ ~eow~
-indique le cas échéant que ce noeud correspond à une fin de mot (le
+représentation d'un lexique par son nœud racine. Le champ ~eow~
+indique le cas échéant que ce nœud correspond à une fin de mot (le
 lexique ayant cette racine contient donc le mot vide ~""~), et le
-champ ~words~ représente les arêtes reliant le noeud à ses fils :
-à chaque lettre, on associe (s'il existe) le noeud atteint en suivant
+champ ~words~ représente les arêtes reliant le nœud à ses fils :
+à chaque lettre, on associe (s'il existe) le nœud atteint en suivant
 l'arête étiquetée par cette lettre. Le cas de base de ce type récursif
-est réalisé par un noeud dont le champ ~word~ est une table
+est réalisé par un nœud dont le champ ~word~ est une table
 d'association vide.
 
 Pour implémenter ce module, vous aurez besoin d'utiliser les fonctions
@@ -542,13 +449,14 @@ fournies par le module ~Map~. Lisez donc consciencieusement sa
 documentation, et posez des questions à vos encadrants si des points
 vous semblent obscurs.
 
-La fonction ~load_file~ vous est déjà fournie. Si vous avez des
-questions sur la façon dont elle est écrite, posez les à vos
-encadrants. Le fichier ~dict/dico_fr.txt~ contient une liste de tous
-les mots valides en français (pluriels et verbes conjugués compris),
-un mot par ligne. Le répertoire ~dict~ contient également un fichier
-~dico_fr_petit.txt~ qui liste les 100 premiers mots français. Vous
-pouvez si vous le souhaitez vous en servir pour faire des tests.
+La fonction ~load_file~ vous est déjà fournie. Le fichier
+~dict/dico_fr.txt~ contient une liste de tous les mots valides en
+français (pluriels et verbes conjugués compris), un mot par ligne. Le
+répertoire ~dict~ contient également un fichier ~dico_fr_petit.txt~
+qui liste les 100 premiers mots français. Vous pouvez si vous le
+souhaitez vous en servir pour faire des tests. *Vous ne devez pas
+modifier ~dico_fr.txt~ :* il servira de référence pour le programme
+final.
 
 *** Path
 
@@ -560,6 +468,15 @@ suivants :
 - Deux cases consécutives dans le chemin sont voisines sur la grille.
 - Toute case de la grille est présente au plus une fois dans le
   chemin.
+
+#+begin_remarque
+
+Comme les règles le précisent, deux cases voisines sont deux cases
+« qui se touchent » par un côté ou par un angle. On remarquera que
+toutes les cases n'ont pas 8 voisins : par exemple, les cases tout
+à droite n'ont pas de voisin droit.
+
+#+end_remarque
 
 Ces chemins correspondent donc aux « trajets » que l'on peut suivre
 sur la grille pour former des mots. Les fonctions du module ~Path~
@@ -581,7 +498,7 @@ Boggle, qui trouve tous les mots formables.
 On utilisera à cette fin la technique du /retour sur trace/, aussi
 appelée /backtracking/ [fn:backtracking]. Le retour sur trace est une
 technique de programmation, ainsi qu'une famille d'algorithmes qui la
-mettent en oeuvre, consistant à prendre des décisions pour faire
+mettent en œuvre, consistant à prendre des décisions pour faire
 avancer la résolution d'un problème et à revenir en arrière en cas de
 blocage (c'est-à-dire lorsqu'il s'avère que ces décisions sont
 incohérentes).
@@ -640,7 +557,7 @@ sur une fin de mot possible, on ajoute le mot aux solutions.
       \quad $lexicon$ : un lexique de mots autorisés
     }
     \KwOut{\\
-      \quad Un itérateur sur tous les chemins sur la grille formant un mot autorisées
+      \quad Un itérateur sur tous les chemins sur la grille formant un mot autorisé
     }
     \Return{$\bigcup_{ (i, j) ~∈~ \text{cases de la grille} } \backtrack{board, lexicon, empty path, (i, j)}$} \;
   }
@@ -651,7 +568,7 @@ sur une fin de mot possible, on ajoute le mot aux solutions.
 \end{algorithm}
 
 L'Algorithme [[alg:backtrack]] formalise cette explication. La fonction
-\backtrack est le coeur de la résolution : elle visite une case en
+\backtrack est le cœur de la résolution : elle visite une case en
 l'ajoutant à un chemin déjà parcouru et avance dans les mots du
 lexique en sélectionnant les suffixes de la lettre inscrite sur la
 case visitée. Si on arrive sur une fin de mot, le chemin parcouru
@@ -663,36 +580,18 @@ de la grille avec un lexique initial et un chemin initialement vide.
 
 La présentation de l'Algorithme [[alg:backtrack]] utilise des notations
 ensemblistes pour les itérateurs. Voici un bref rappel de leurs
-significations pour ceux qui auraient des trous de mémoire :
-$\emptyset$ est l'itérateur vide, $\{x\}$ est l'itérateur sur un seul
-élément $x$, et si $iter$ est un itérateur sur des valeurs \(x_0, x_1,
-x_2, ...\) de type $τ$ et $f$ une fonction de type $τ →
-υ \texttt{ Iter.t}$, alors $\bigcup_{x ~∈~ iter} f(x)$ est un
-itérateur sur des valeurs de type $υ$ qui itère successivement sur
+significations : $\emptyset$ est l'itérateur vide, $\{x\}$ est
+l'itérateur sur un seul élément $x$, et si $iter$ est un itérateur sur
+des valeurs \(x_0, x_1, x_2, ...\) de type $τ$ et $f$ une fonction de
+type $τ → υ \texttt{ Iter.t}$, alors $\bigcup_{x ~∈~ iter} f(x)$ est
+un itérateur sur des valeurs de type $υ$ qui itère successivement sur
 tous les éléments des $f(x_i)$. À quelle fonction du module =Iter=
 cette notation vous fait-elle penser ?
 
 Votre travail sur le module =Solver= consiste à implémenter ces deux
 fonctions. On vous donne l'algorithme détaillé, il ne vous reste donc
 plus qu'à l'adapter en OCaml à l'aide des modules que vous avez déjà
-implémenté.
-
-Vous êtes fortement encouragés à chercher à comprendre l'algorithme
-avant de le transcrire : d'une part, vous en apprendrez quelque chose,
-d'autre part, si une erreur se glissait dans votre module, vous aurez
-énormément de mal à la corriger sans comprendre ce que vous
-écrivez. Il s'agit en effet d'un algorithme où une grande rigueur est
-requise pour ne pas introduire d'erreur difficile à repérer qui le
-rende totalement incorrect (ou juste presque correct, ce qui est en
-fait exactement la même chose).
-
-Dans le même ordre d'idée, vous êtes également vivement encouragés
-à tester cet algorithme. Vous pouvez trouver sur internet des grilles
-de Boggle résolues : assurez-vous que vous trouvez bien tous les mots,
-et que vous ne trouvez pas de mot impossible à former ou n'appartenant
-pas au lexique. Attention : les grilles disponibles sur internet n'ont
-pas forcément exactement le même lexique... Soyez méticuleux dans vos
-tests pour vous assurer de la correction de votre code !
+implémentés.
 
 ** Le programme final
 <<sec:programme-final>>
@@ -700,20 +599,20 @@ tests pour vous assurer de la correction de votre code !
 Une fois tous les différents modules de la bibliothèque implémentés et
 testés, il ne vous reste plus qu'à écrire le programme final. Le
 fichier correspondant est =bin/main.ml=. Il est compilé avec la
-bibliothèque par la commande ~$ jbuilder build~ (depuis le répertoire
-racine du projet) et peut être exécuté avec la commande ~$ jbuilder exec
-boggle~. Vérifiez que ces commandes fonctionnent : si vous n'avez pas
-modifié le fichier =bin/main.ml=, le programme doit simplement
-afficher un message vous invitant au travail.
+bibliothèque par la commande ~$ make~ (depuis le répertoire racine du
+projet) et peut être exécuté avec la commande ~$ ./run.sh~. Vérifiez
+que ces commandes fonctionnent : si vous n'avez pas modifié le fichier
+=bin/main.ml=, le programme doit simplement afficher un message vous
+invitant au travail.
 
-On prendre comme mots valides la liste des mots du fichier
+On prendra comme mots valides la liste des mots du fichier
 ~dict/dico_fr.txt~ de 3 lettres ou plus. Attention : vous n'avez pas
 le droit de modifier ce fichier ! Vous n'avez pas non plus le droit
 d'en créer un autre qui contienne uniquement les mots de plus de
 3 lettres. Utilisez les fonctions que vous avez écrites pour
 construire cette liste.
 
-Exécuté avec la commande ~$ jbuilder exec boggle~, le programme doit :
+Exécuté avec la commande ~$ ./run.sh~, le programme doit :
 
 1. Afficher une grille de Boggle aléatoire, avec la fréquence des
    lettres adaptée au français
@@ -726,16 +625,23 @@ Exécuté avec la commande ~$ jbuilder exec boggle~, le programme doit :
    qu'une seule fois.
 
 Ce programme peut également prendre un paramètre dans la ligne de
-commande, qui lui sera alors passé de la façon suivante : ~jbuilder
-exec boggle unparametre~. S'il est présent, ce paramètre sera
-considéré comme une grille à résoudre, donnée par ses lettres dans
-l'ordre usuel de lecture (de droite à gauche, puis de haut en bas). Le
+commande, qui lui sera alors passé de la façon suivante : ~./run.sh
+unparametre~. S'il est présent, ce paramètre sera considéré comme une
+grille à résoudre, donnée par ses lettres (en minuscule) dans l'ordre
+usuel de lecture (de gauche à droite, puis de haut en bas). Le
 programme devra alors simplement afficher toutes les solutions de la
 grille, avec les mêmes contraintes que précédemment : elles doivent
 être classées par ordre décroissant de longueur puis par ordre
 alphabétique croissant, et chaque mot ne doit être affiché qu'une
 seule fois. *Note :* on pourra supposer que tous les caractères de
 ~unparametre~ sont des lettres minuscules sans le vérifier.
+
+Le tableau ~Sys.argv : string array~ contient les paramètres du
+programme. Le premier élément du tableau est le nom du programme
+exécuté. Pour savoir si le programme a reçu un paramètre
+supplémentaire, vous pouvez donc vérifier que la longueur du tableau
+est supérieure ou égale à 2, et le cas échéant, accéder à ce paramètre
+par la valeur de ~Sys.argv.(1)~.
 
 Voici quelques précisions supplémentaires :
 
@@ -744,21 +650,15 @@ Voici quelques précisions supplémentaires :
   ~Boggle.Lexicon.has_empty_word~. Vous pouvez également ajouter ~open
   Boggle~ en haut de votre fichier pour pouvoir utiliser directement
   ~Lexicon.has_empty_word~.
-- On pourra supposer que tous les caractères du paramètre optionnel
-  sont des lettres minuscules sans le vérifier.
-- Les éventuels paramètres supplémentaires passés au programme (par
-  exemple en écrivant ~$ jbuilder exec grillearesoudre bonjour~)
-  seront ignorés.
 - Deux opérations du programme peuvent échouer (des fonctions liées
   renvoyant alors ~None~) :
-  - La lecture du fichier lexique, si vous l'avez malencontreusement
-    supprimé ou renommé, ou que vous n'exécutez pas la commande depuis
-    la racine du projet.
-  - La construction de la grille à partir du paramètre, s'il ne
-    comporte pas un nombre carré de lettres.
+  - La lecture du fichier lexique, si vous n'exécutez pas la commande
+    depuis la racine du projet.
+  - La construction de la grille, si le paramètre ne comporte pas un
+    nombre carré de lettres.
   Dans ces deux cas, le programme devra terminer prématurément en
   affichant un message décrivant l'erreur rencontrée. Pour terminer le
-  programme, vous pourrez exécuter l'appel de fonction OCaml ~exit 1~.
+  programme OCaml, vous pourrez écrire ~exit 1~.
 
 Pour attendre que l'utilisateur appuie sur \keyenter, vous pouvez
 utiliser la fonction ~read_line : unit -> string~, qui laisse
@@ -783,17 +683,14 @@ qui sert à spécifier cet ordre : elle prend en paramètre deux éléments
 et doit renvoyer ~0~ s'ils sont égaux, un nombre strictement négatif
 si le premier est strictement inférieur au deuxième, et un nombre
 strictement positif s'il lui est strictement supérieur. C'est donc en
-choisissant la bonne fonction que vous obtiendrez l'ordre voulu
-(rappel : par ordre /décroissant/ de taille, puis par ordre
-alphabétique /croissant/).
+choisissant la bonne fonction que vous obtiendrez l'ordre voulu.
 
 Pour écrire cette fonction de comparaison, vous pourrez utiliser la
-fonction ~String.length~ (qui donne la longueur d'une chaîne) et la
-fonction ~String.compare : string -> string -> int~ qui compare deux
+fonction ~String.length~, qui donne la longueur d'une chaîne, et la
+fonction ~String.compare : string -> string -> int~, qui compare deux
 chaînes (en suivant les même conventions que le paramètre de
 ~List.sort~) selon l'ordre alphabétique (donc sans considération de
-taille). Pensez encore une fois à tester votre fonction de comparaison
-pour vous assurer qu'elle est correcte !
+taille).
 
 * Conclusion
 
@@ -809,16 +706,53 @@ y prenez pas à la dernière minute !
 
 Bon courage !
 
+#+latex: \label{before-appendices}
 #+latex: \begin{appendices}
 
-* La programmation modulaire en OCaml
+* Utilisation de jbuilder
+<<sec:jbuilder>>
+
+Le projet utilise par défaut ~jbuilder~ (qui sera bientôt renommé
+~dune~), un système de compilation moderne pour OCaml. Les fichiers
+nécessaires à son bon fonctionnement vous sont fournis, ainsi qu'un
+=Makefile= et un script =run.sh= qui encapsulent son utilisation.
+
+Vous pouvez également utiliser les commandes suivantes (à la racine du
+projet) :
+
+- ~jbuilder build lib/.merlin~ : :: génère le fichier
+     ~lib/.merlin~. Vous pouvez également générer ~bin/.merlin~, pour
+     utiliser merlin lors de l'édition des différents
+     fichiers.
+- ~jbuilder build @doc~ : :: génère la documentation en format web de
+     l'interface des différents modules de la bibliothèque
+     ~Boggle~. Vous pouvez ensuite consulter cette documentation en
+     ouvrant avec votre navigateur le fichier
+     ~_build/default/_doc/boggle/Boggle/index.html~. Il s'agit d'une
+     version plus agréable à lire (et avec des liens cliquables entre
+     les différents modules) de la documentation présente dans les
+     fichiers ~.mli~.
+- ~jbuilder build~ : :: compile la librairie ~Boggle~ et l'exécutable
+     ~boggle~ (qu'on vous demande de programmer).
+- ~jbuilder exec boggle [args]~ : :: lance l'exécutable ~boggle~ avec
+     les paramètres optionnels ~args~ (voir la
+     Section [[sec:programme-final]]).
+- ~jbuilder utop~ : :: lance ~utop~, un terminal OCaml, en chargeant
+     automatiquement la librairie ~Boggle~. *Cette commande est très
+     utile pour tester votre implémentation des différents modules*.
+- ~jbuilder clean~ : :: supprime les fichiers générés par ~jbuilder~
+     pour repartir à neuf. Attention, cette commande supprime
+     également la documentation et les fichiers ~.merlin~, il faudra
+     les générer à nouveau.
+
+* Rappels sur la programmation modulaire en OCaml
+
 <<sec:introduction-modules>>
 
-Ceux qui ont déjà suivi un cours d'OCaml devraient déjà savoir comment
-s'utilisent les modules. Pour les autres, vous étudierez ça plus tard
-dans MPIL. Afin que vous puissiez vous attaquer au projet dès
-maintenant, cette section est une courte introduction qui présente ce
-que vous avez besoin de savoir pour avancer.
+Vous savez normalement déjà utiliser les modules en OCaml. Puisqu'il
+s'agit d'une part importante de l'organisation du projet, cette
+Section sert de rappel et éventuellement de précisions de certains
+points.
 
 À toutes fins utiles, la documentation OCaml sur les modules est
 consultable en ligne à l'adresse
@@ -842,11 +776,9 @@ en question. L'interface spécifie ce que le module /exporte/,
 c'est-à-dire ce qu'il est possible d'utiliser /en dehors du module/,
 dans d'autres fichiers. Vous n'avez pas besoin d'écrire des interfaces
 dans le cadre de ce projet, on ne s'attardera donc pas sur la syntaxe
-de ces fichiers. Sachez simplement que la documentation produite comme
-expliqué en section [[sec:utilisation-jbuilder]] ne montre que les
-fonctions exportées par le module. Vous êtes libres d'écrire autant de
-fonctions additionnelles que vous le désirez dans l'implémentation,
-mais vous ne pourrez pas les utiliser de l'extérieur.
+de ces fichiers. Vous êtes libres d'écrire autant de fonctions
+additionnelles que vous le désirez dans l'implémentation, mais vous ne
+pourrez pas les utiliser de l'extérieur.
 
 Si votre module est représenté par les fichiers ~nomDuModule.ml~ et
 ~nomDuModule.mli~, et qu'il fournit une fonction ~nom_de_la_fonction~,
@@ -928,10 +860,42 @@ en plusieurs fichiers, vous n'avez donc rien d'autre de particulier
 
 #+latex: \end{appendices}
 
+
+* Interfaces
+<<sec:interfaces>>
+
+Cette fonction rappelle les interfaces des différents modules, tels
+qu'ils sont fournis avec le squelette de base. On rappelle que chaque
+fichier dont le contenu est rappelé ici est situé dans le répertoire
+=lib/= du projet.
+
+** =iter.mli=
+
+#+INCLUDE: "../lib/iter.mli" src ocaml
+
+** =randomLetter.mli=
+
+#+INCLUDE: "../lib/randomLetter.mli" src ocaml
+
+** =board.mli=
+
+#+INCLUDE: "../lib/board.mli" src ocaml
+
+** =path.mli==
+
+#+INCLUDE: "../lib/path.mli" src ocaml
+
+** =lexicon.mli=
+
+#+INCLUDE: "../lib/lexicon.mli" src ocaml
+
+** =solver.mli=
+
+#+INCLUDE: "../lib/solver.mli" src ocaml
+
 * Footnotes
 
-[fn:git] Par exemple à l'adresse
-https://openclassrooms.com/courses/gerez-vos-codes-source-avec-git
+[fn:boggle] http://www.boggle.fr/
 
 [fn:backtracking] Bien qu'anglais, ce mot est quasi-systématiquement
 utilisé, y compris en français.
