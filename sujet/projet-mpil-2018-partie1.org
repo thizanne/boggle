@@ -52,11 +52,9 @@ aléatoire de grilles et un solveur trouvant tous les mots du
 plateau. La deuxième partie ajoutera une interface graphique
 permettant de jouer en solitaire.
 
-Cet énoncé comporte \pageref{before-appendices} pages
-(\pageref{LastPage} avec les Annexes).  La Section [[sec:enonce-detaille]]
-détaille l'énoncé et précise le travail à réaliser. La
-Section [[sec:consignes-generales]] donne les consignes à suivre pour
-réaliser et rendre ce projet.
+La Section [[sec:enonce-detaille]] détaille l'énoncé et précise le travail
+à réaliser. La Section [[sec:consignes-generales]] donne les consignes
+à suivre pour réaliser et rendre ce projet.
 
 En Annexe, la Section [[sec:jbuilder]] détaille l'utilisation de
 =jbuilder=, un système de compilation pour OCaml utilisé par défaut
@@ -700,19 +698,11 @@ indiquerez comme sujet du mail =[Rendu MPIL 1] <nom1> <nom2>=.
 *La notation tiendra très fortement compte du respect de ces
 consignes !*
 
-* Conclusion
-
-Cet énoncé vous a détaillé les règles du jeu, l'organisation du projet
-et le rôle des différents modules qui le composent. Il ne vous reste
-plus qu'à implémenter ces modules et l'exécutable final. Rappelez-vous
-que vous pouvez poser des questions à vos encadrants si vous ne
-comprenez pas un point du sujet, et ne vous y prenez pas à la dernière
-minute !
-
-Bon courage !
 
 #+latex: \label{before-appendices}
 #+latex: \begin{appendices}
+
+#+latex: \newpage
 
 * Utilisation de jbuilder
 <<sec:jbuilder>>
@@ -862,6 +852,9 @@ projet) :
 # ~jbuilder~ gère automatiquement la compilation d'un programme réparti
 # en plusieurs fichiers, vous n'avez donc rien d'autre de particulier
 # à savoir.
+
+
+#+latex: \newpage
 
 * Interfaces
 <<sec:interfaces>>
