@@ -466,7 +466,7 @@ sur une fin de mot possible, on ajoute le mot aux solutions.
         } \Else {
           $solution\_chemin\_courant$ ← $\emptyset$ \;
         }
-        $solutions\_via\_voisins$ ← $\bigcup_{(i', j') ~∈~ \text{voisins de }(i, j)}$ \backtrack{board, lexicon, path', (i', j')} \;
+        $solutions\_via\_voisins$ ← $\bigcup_{(i', j') ~∈~ \text{voisins de }(i, j)}$ \backtrack{board, lexicon', path', (i', j')} \;
         \Return{$solution\_chemin\_courant \cup solutions\_via\_voisins$}
       }
     } \Else {
