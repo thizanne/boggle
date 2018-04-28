@@ -13,6 +13,9 @@ val is_empty : t -> bool
 val add : string -> t -> t
 (** [add word lexicon] ajoute le mot [word] au lexique [lexicon]. *)
 
+val contains : string -> t -> bool
+(** Est-ce qu'un lexique contient un mot donné ? *)
+
 val to_iter : t -> string Iter.t
 (** Un itérateur sur les mots d'un lexique. *)
 

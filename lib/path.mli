@@ -27,6 +27,9 @@ val to_string : Board.t -> t -> string
     case du chemin dans l'ordre.
 *)
 
+val iter : t -> (int * int) Iter.t
+(** Renvoie un itérateur sur les positions de t *)
+
 val iter_to_words : Board.t -> t Iter.t -> string Iter.t
 (** Étant donnés une grille et un itérateur sur des chemins, renvoie
     un itérateur sur les mots décrits par ces chemins. Si deux chemins

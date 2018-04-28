@@ -44,6 +44,16 @@ let add word lexicon =
       { lexicon with words = M.add word.[n] new_sublexicon lexicon.words }
   in add_chars_from_n lexicon 0
 
+let contains word lexicon =
+  let rec contains_from_n lexicon n =
+    if n = String.length word
+    then has_empty_word lexicon
+    else
+      match M.find_opt word.[n] lexicon.words with
+      | None -> false
+      | Some sublexicon -> contains_from_n sublexicon (n + 1)
+  in contains_from_n lexicon 0
+
 let string_cons char word =
   (* Add a char to the beginning of a string *)
   Printf.sprintf "%c%s" char word

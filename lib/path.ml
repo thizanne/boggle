@@ -17,6 +17,12 @@ let rec to_string board path = match path with
     to_string board ps ^
     String.make 1 (Board.get_letter board i j)
 
+let rec iter path f = match path with
+  | [] -> ()
+  | last :: previous ->
+    iter previous f;
+    f last
+
 let iter_to_words board all_paths =
   Iter.fold
     (fun acc path -> Lexicon.add (to_string board path) acc)
