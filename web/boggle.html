@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Boggle, le jeu</title>
+    <link rel="stylesheet" href="boggle.css">
+  </head>
+  <body>
+    <p id="message">
+    </p>
+
+    <table id="board">
+      <tr>
+        <td> ? </td> <td> ? </td> <td> ? </td> <td> ? </td>
+      </tr>
+      <tr>
+        <td> ? </td> <td> ? </td> <td> ? </td> <td> ? </td>
+      </tr>
+      <tr>
+        <td> ? </td> <td> ? </td> <td> ? </td> <td> ? </td>
+      </tr>
+      <tr>
+        <td> ? </td> <td> ? </td> <td> ? </td> <td> ? </td>
+      </tr>
+    </table>
+
+    <br />
+
+    <p id="current_word">
+      _
+    </p>
+
+    <div id="interface">
+      <button type="button" id="check_word">Valider le mot</button>
+      <button type="button" id="new_grid">Nouvelle grille</button>
+      <button type="button" id="solve_grid">Résoudre la grille</button>
+    </div>
+
+    <p id="all_words"> </p>
+
+    <script src="main.bc.js"></script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+(jbuild_version 1)
+
+(executable
+ ((name main)
+  (libraries (boggle js_of_ocaml))
+  (preprocess (pps (js_of_ocaml-ppx)))
+  ))
+
+(rule (copy ${ROOT}/dict/dico_fr.txt dico_fr.txt))
+
+(alias
+ ((name DEFAULT)
+  (deps (main.bc.js boggle.html boggle.css dico_fr.txt))
+  ))

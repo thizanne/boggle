@@ -1,0 +1,57 @@
+#message {
+    color: red;
+    position: fixed;
+}
+
+#board {
+    border-spacing: 0.5em;
+    margin: auto;
+}
+
+#board td {
+    box-shadow: inset 0px -3px 3px #999, 1px 2px 2px #999;
+    border-radius: 3px;
+    vertical-align: middle;
+    text-align: center;
+    width: 2.2em;
+    height: 2.2em;
+    text-transform: uppercase;
+    font-family: sans;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#board .onpath {
+    background-color: #ddd;
+}
+
+#board .last {
+    background-color: #b5b5b5;
+}
+
+#board td:hover {
+    box-shadow: inset 0px -3px 3px #999, 1px 2px 2px #999, 0 0 5px black;
+    cursor: pointer;
+}
+
+#interface {
+    margin: auto;
+    text-align: center;
+}
+
+#current_word {
+    text-transform: uppercase;
+    font-family: sans;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+#all_words {
+    font-family: mono;
+    text-transform: uppercase;
+}
+
+#all_words .not_found {
+    color: red;
+}

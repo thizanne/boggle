@@ -9,3 +9,7 @@ clean:
 .PHONY: doc
 doc:
 	jbuilder build @doc
+
+.PHONY: web
+web:
+	jbuilder build @web/DEFAULT
