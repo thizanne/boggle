@@ -1,0 +1,220 @@
+#+latex-class: article
+#+title: Boggle
+#+subtitle: Projet MPIL 2018 @@latex:\\@@ Deuxième partie
+#+author: Thibault Suzanne @@latex:\\ \hrefmail{thi.suzanne@gmail.com}@@
+#+options: toc:nil date:nil
+#+latex_header: \input{util.tex}
+
+#+BEGIN_flushright
+#+BEGIN_scriptsize
+#+begin_itshape
+« Oui, vous tous, comprenez que les mots sont des choses.\\
+Ils roulent pêle-mêle au gouffre obscur des proses, \\
+Ou font gronder le vers, orageuse forêt. \\
+Du sphinx Esprit Humain le mot sait le secret. » \\
+#+end_itshape
+Victor Hugo, /Les Contemplations (1856)/ \\
+#+END_scriptsize
+#+END_flushright
+
+* Introduction
+
+Dans la première partie de ce projet, vous avez implémenté un moteur
+pour le jeu de Boggle, ainsi qu'un solveur de grille. Cette deuxième
+partie vous propose d'implémenter une interface graphique pour pouvoir
+y jouer par vous-mêmes.
+
+*Cette partie est optionnelle. Si vous souhaitez la rendre, vous
+pouvez le faire jusqu'au lundi 20 mai, 23h59.* Un bonus sur la
+notation du projet sera accordé aux étudiants ayant fait ce
+travail. Les autres ne seront pas pénalisés.
+
+* Énoncé
+
+Votre travail consiste à réaliser à l'aide de =js_of_ocaml= une
+interface pour le jeu de Boggle, similaire à celle disponible
+à l'adresse
+https://www.di.ens.fr/~suzanne/misc/boggle/boggle.html. Pour cela,
+vous complèterez le code de l'archive fournie à l'adresse
+https://www.di.ens.fr/~suzanne/misc/boggle.tar.gz. Il s'agit d'un
+corrigé de la première partie, auquel on a rajouté quelques fonctions
+supplémentaires qui n'étaient pas demandées. Vous pouvez également
+utiliser votre propre travail en rajoutant ces fonctions si vous le
+souhaitez.
+
+Une grosse partie de l'interface vous est déjà fournie. Vous devez
+simplement implémenter le module ~Action~, avec la signature demandée.
+
+** Architecture du projet
+
+Le code de l'interface est situé dans le répertoire =web/=. Il est
+composé de trois modules différents : ~State~, ~Html~ et ~Action~. Il
+contient également un fichier ~main.ml~ qui en est le point d'entrée,
+ainsi qu'un fichier ~boggle.html~ contenant la structure de la page de
+jeu et un fichier ~boggle.css~ fournissant un style (rudimentaire)
+pour les éléments de cette page. Enfin, un module ~Prelude~ fournit
+quelques fonctions utilisables dans les différents modules.
+
+*** ~State~
+
+/Ce module vous est déjà fourni./
+
+Le module ~State~ contient l'état global du jeu. À chaque action de
+l'utilisateur correspondra une mise à jour de cet état global.
+
+Il est réparti en trois sous-modules différents : ~Board~, ~Path~ et
+~Words~.
+
+Le module ~Board~ gère la grille elle-même, c'est-à-dire le tableau
+des lettres. Il contient une fonction permettant d'accéder à ce
+tableau ainsi qu'une fonction permettant de le réinitialiser (en
+créant un nouveau tableau aléatoire).
+
+Le module ~Words~ gère la liste des mots formés. Il contient une
+fonction ~found~ renvoyant l'ensemble des mots déjà trouvés par
+l'utilisateur, une fonction ~check~ permettant de vérifier qu'un mot
+existe (dans un dictionnaire chargé à la création du module) et, le
+cas échéant, de l'ajouter aux mots trouvés, et d'une fonction ~reset~
+remettant à zéro (c'est-à-dire au lexique vide) l'ensemble des mots
+trouvés. Il fournit également une fonction ~solution~ renvoyant un
+itérateur sur l'ensemble des mots valides qu'on peut former sur la
+grille.
+
+Le module ~Path~ gère le chemin, c'est-à-dire la suite de cases de la
+grille parcourues par l'utilisateur pour former un mot. Il fournit des
+fonctions pour ajouter des cases à ce chemin, pour le remettre à zéro,
+pour y accéder et pour accéder à la dernière case (si elle existe).
+
+*** ~Html~
+
+/Ce module vous est déjà fourni./
+
+Le module ~Html~, également réparti en plusieurs sous-modules, fournit
+différentes fonctions permettant de mettre à jour l'affichage du
+jeu. Ces fonctions devront donc être appelées quand l'état global du
+jeu change, afin de refléter ce changement sur la page.
+
+Le sous-module ~Html.Board~ fournit également une fonction ~cell_tag~
+qui renvoie l'élément HTML correspondant à une case donnée de la
+grille. Cette fonction est appelée dans le fichier ~main.ml~, vous
+n'aurez pas besoin de vous en servir vous-mêmes.
+
+Le module ~Html~ dépend du module ~Board~ : les fonctions d'affichage
+accèdent à l'état global afin de récupérer les données à afficher.
+
+#+begin_remarque
+
+Bien que le moteur implémenté dans la Partie 1 travaille avec des
+minuscules, l'affichage de la grille et des mots formés est en
+majuscules. C'est le fichier style de la page qui permet cette
+configuration : vous ne devez pas vous en préoccuper (et ne devriez
+pas avoir à le faire si vous utiliser les fonctions fournies).
+
+#+end_remarque
+
+*** ~Action~
+
+/Votre travail consiste à implémenter ce module./
+
+Le module ~Action~ regroupe dans le type ~t~ les comportements du
+programme en réaction à des actions de l'utilisateur.
+
+Dans l'interface proposée, il existe quatre actions possibles, que
+vous devrez implémenter :
+
+- Réinitialiser l'ensemble du jeu, quand on clique sur le bouton
+  correspondant. Tout l'affichage (chemin et liste de mots compris)
+  doit être mis à jour.
+- Afficher les solutions, quand on clique sur le bouton
+  correspondant. Cette action doit également désactiver le bouton
+  permettant de valider un mot.
+- Valider le mot formé par le chemin en cours, quand on clique sur le
+  bouton correspondant. Cette action doit également remettre à zéro le
+  chemin, et mettre à jour l'affichage de ce chemin et de la liste des
+  mots trouvés. Si le mot n'existe pas, un message sera affiché en
+  haut à gauche de la page. Vous utiliserez la fonction
+  ~State.Words.check~ pour implémenter cette action : elle affiche
+  elle-même le message, vous n'avez pas à vous en préoccuper.
+- Ajouter une case au chemin correspondant, lorsqu'on clique sur la
+  case en question. Cette fonction doit également mettre à jour
+  l'affichage du chemin. Si on clique sur une case qu'il n'est pas
+  possible d'ajouter (ce n'est pas un voisin de la dernière case, ou
+  elle fait déjà partie du chemin), cette action ne fait rien.
+
+Le type ~Action.t~ est implémenté (dans le fichier =action.ml=) par
+des fonctions de type ~unit -> unit~. Vous devez donc implémenter ces
+différentes fonctions (qui se contentent dans l'archive fournie
+d'afficher un message ~"Not implemented"~), en utilisant pour cela les
+fonctions du module ~State~ pour mettre à jour l'état global et celles
+du module ~Html~ pour mettre à jour l'affichage correspondant.
+
+Vous devrez également implémenter les opérateurs ~( => )~ et
+~( ==> )~, qui permettent d'attacher des actions à des éléments de la
+page Html. *Rappel :* utilisez l'attribut ~##.onclick~ des éléments et
+la fonction ~Dom_html.handler~.
+
+~( ==> )~ permet d'attacher une action à une valeur représentant un
+élément Html. ~( => )~ permet d'attacher une action en donnant
+simplement l'identifiant de l'élément : elle se charge alors de
+récupérer cet élément à l'aide de ~Dom_html.getElementById~ avant de
+lui attacher l'action.
+
+** Compilation et exécution
+
+Pour compiler votre projet, exécutez depuis la racine la commande
+~make web~. Vous pourrez alors jouer au Boggle en visitant la page
+~_build/default/web/boggle.html~.
+
+*** Mise en place de l'environnement
+
+À la PPTI, la mise en place de l'environnement permettant de compiler
+le projet est exactement la même que pour la première partie.
+
+Sur vos machines personnelles, en plus des commandes décrites dans le
+sujet de la première partie pour installer ~opam~, vous aurez besoin
+d'installer =js_of_ocaml= :
+
+#+BEGIN_SRC console
+$ opam install js_of_ocaml-ppx
+#+END_SRC
+
+* Rendu
+
+Les consignes de rendu sont similaires à celle de la première partie.
+
+Pour rendre votre projet, vous l'archiverez dans un =.zip=. Cette
+archive devra s'appeler =boggle_WEB_<votrenom>.zip=. Vous enverrez
+cette archive =.zip= à l'équipe enseignante avant le *lundi 20 mai,
+23h59*. Vous pouvez faire ce travail en binôme.
+
+#+latex: \label{before-appendices}
+#+latex: \begin{appendices}
+
+#+latex: \newpage
+
+* Fichiers utiles
+
+On rappelle ici l'interface des différents modules du projet, le point
+d'entrée, ainsi que la structure HTML de la page de jeu.
+
+** =state.mli=
+
+#+INCLUDE: "../web/state.mli" src ocaml
+
+** =html.mli=
+
+#+INCLUDE: "../web/html.mli" src ocaml
+
+** =action.mli=
+
+#+INCLUDE: "../web/action.mli" src ocaml
+
+** =main.ml==
+
+#+INCLUDE: "../web/main.ml" src ocaml
+
+** =boggle.html=
+
+#+INCLUDE: "../web/boggle.html" src html
+
+#+latex: \end{appendices}
